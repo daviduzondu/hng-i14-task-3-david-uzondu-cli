@@ -9,7 +9,8 @@
   "scripts": {
     "build": "npx tsc",
     "dev": "concurrently \"tsc --noEmit --watch\" \"tsdown --watch\"",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --ext .ts"
   },
   "keywords": [],
   "author": "",
@@ -19,9 +20,13 @@
   "license": "ISC",
   "packageManager": "pnpm@10.33.2",
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/node": "^25.6.0",
+    "eslint": "^10.2.1",
+    "globals": "^17.5.0",
     "tsdown": "^0.21.10",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.59.0"
   },
   "dependencies": {
     "@commander-js/extra-typings": "^14.0.0",

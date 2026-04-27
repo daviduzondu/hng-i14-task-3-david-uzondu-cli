@@ -1,17 +1,14 @@
-import { request } from "@/src/lib/api";
 import {
   buildOptions,
   catchAndLogError,
   normalizeOptions,
   parseOrThrow,
-  renderTable,
 } from "@/src/lib/utils";
 import { ProfileExportSchema } from "@/src/validation/profile";
 import { Command } from "commander";
 import ora from "ora";
 import * as z from "zod";
 import _ from "lodash";
-import type { ErrorResponse, SuccessResponse } from "@/src/misc/types";
 
 export const exportProfilesCommand = buildOptions(
   new Command("export").description(

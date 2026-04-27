@@ -16,7 +16,7 @@ export const searchProfilesCommand = new Command("search")
       spinner.start("Searching...Please wait");
       const q = parseOrThrow(profileSearchSchema, searchTerm);
       const searchProfilesRequest = await request<
-        {},
+        object,
         | ({ data: Pick<SuccessResponse, "data">[] } & Omit<
             SuccessResponse,
             "data"

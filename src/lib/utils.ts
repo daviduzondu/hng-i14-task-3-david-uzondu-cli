@@ -10,7 +10,7 @@ type RenderTableOptions = {
   truncate?: number; // truncate long cell values
 };
 
-export function normalizeOptions(options: {}) {
+export function normalizeOptions(options: object) {
   return Object.fromEntries(
     Object.entries(options).map(([key, value]) => [_.snakeCase(key), value]),
   );
@@ -20,7 +20,10 @@ export function isOptional(schema: z.ZodType) {
   return schema.safeParse(undefined).success;
 }
 
-export function parseOrThrow<T>(schema: z.ZodType<T>, payload: any) {
+export function parseOrThrow<T>(
+  schema: z.ZodType<T>,
+  payload: object | string,
+) {
   const { error, data } = z.safeParse(schema, payload);
   if (error)
     throw new Error(
@@ -50,12 +53,12 @@ export async function catchAndLogError(fn: () => Promise<void>, spinner: Ora) {
   try {
     await fn();
     spinner.stop();
-  } catch (error) {
+  } catch (error: unknown) {
     spinner.fail(
       isAxiosError(error)
         ? (error.response?.data?.message ?? error.message)
-        : !!(error as Error).message
-          ? (error as Error).message
+        : error instanceof Error
+          ? error.message
           : "Something went wrong!",
     );
   }
@@ -70,7 +73,7 @@ export function renderTable<T extends Record<string, unknown>>(
     return;
   }
 
-  const head = options.head ?? Object.keys(data[0] as {});
+  const head = options.head ?? Object.keys(data[0] as object);
 
   const table = new Table({ head });
 

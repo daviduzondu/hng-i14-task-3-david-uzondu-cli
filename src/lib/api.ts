@@ -17,7 +17,7 @@ const instance = axios.create({
 
 export async function request<T, D = SuccessResponse | ErrorResponse>(
   config: AxiosRequestConfig<T>,
-): Promise<AxiosResponse<D, any, any>> {
+): Promise<AxiosResponse<D, object, object>> {
   return await instance({
     ...config,
   });
