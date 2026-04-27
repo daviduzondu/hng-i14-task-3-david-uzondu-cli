@@ -9,7 +9,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx tsc",
-    "dev": "concurrently \"tsc --noEmit --watch\" \"tsdown --watch\""
+    "dev": "concurrently \"tsc --noEmit --watch\" \"tsdown --watch\"",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
