@@ -7,7 +7,6 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npx tsc",
     "dev": "concurrently \"tsc --noEmit --watch\" \"tsdown --watch\"",
     "typecheck": "tsc --noEmit"
