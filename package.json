@@ -1,0 +1,37 @@
+{
+  "name": "@daviduzondu/insighta-cli",
+  "bin": {
+    "insighta": "./dist/insighta.mjs"
+  },
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx tsc",
+    "dev": "concurrently \"tsc --noEmit --watch\" \"tsdown --watch\""
+  },
+  "keywords": [],
+  "author": "",
+  "files": [
+    "dist"
+  ],
+  "license": "ISC",
+  "packageManager": "pnpm@10.33.2",
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "tsdown": "^0.21.10",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "@commander-js/extra-typings": "^14.0.0",
+    "@types/lodash": "^4.17.24",
+    "axios": "^1.15.2",
+    "cli-table3": "^0.6.5",
+    "commander": "^14.0.3",
+    "dotenv": "^17.4.2",
+    "lodash": "^4.18.1",
+    "ora": "^9.4.0",
+    "zod": "^4.3.6"
+  }
+}
