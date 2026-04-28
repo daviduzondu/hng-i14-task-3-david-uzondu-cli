@@ -11,7 +11,7 @@ import type z from "zod";
 import type { githubCallbackSchema } from "@/src/validation/auth";
 import { saveCredentials } from "@/src/misc/credentials";
 import { parse } from "cookie";
-import { intro, log, outro } from "@clack/prompts";
+import {  log, outro } from "@clack/prompts";
 
 export const loginAction = async () => {
   log.step("Logging in...");
