@@ -71,8 +71,8 @@ export const loginAction = async () => {
               }
           >({
             url: "/auth/github/callback",
-            method: "POST",
-            data: {
+            method: "GET",
+            params: {
               code: req.query.code,
               code_verifier: pkce.code_verifier,
             },

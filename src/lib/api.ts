@@ -16,6 +16,9 @@ const BASE_URL =
 const instance = axios.create({
   withCredentials: true,
   baseURL: BASE_URL,
+  headers: {
+    "X-API-Version": "1",
+  },
 });
 
 instance.interceptors.request.use((config) => {
@@ -32,6 +35,7 @@ instance.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
     const originalRequest = error.config as RetryableConfig;
+    console.log(error.response?.statusText, originalRequest?.retried !== true);
     if (error.response?.status === 401 && originalRequest?.retried !== true) {
       try {
         originalRequest.retried = true;
@@ -52,7 +56,7 @@ instance.interceptors.response.use(
           if (data)
             saveCredentials({
               ...loadCredentials()!,
-              access_token: data.access_token
+              access_token: data.access_token,
             });
 
           instance.defaults.headers.common["Authorization"] =
