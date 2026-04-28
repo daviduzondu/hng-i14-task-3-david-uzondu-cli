@@ -11,8 +11,7 @@ const instance = axios.create({
   baseURL:
     (process.env.NODE_ENV === "development"
       ? `http://localhost:${process.env.BACKEND_PORT}`
-      : `http://hng-i14-task-2-david-uzondu-server-lime.vercel.app`) + // TODO: Replace prod backend URL with the updated one
-    "/api",
+      : `http://hng-i14-task-2-david-uzondu-server-lime.vercel.app`)  // TODO: Replace prod backend URL with the updated one
 });
 
 export async function request<T, D = SuccessResponse | ErrorResponse>(

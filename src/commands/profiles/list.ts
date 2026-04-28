@@ -35,7 +35,7 @@ export const listProfilesCommand = buildOptions(
       | ErrorResponse
     >({
       method: "get",
-      url: "/profiles",
+      url: "/api"+"/profiles",
       params: { ...data },
     });
     if (listProfilesRequest?.data.status === "success") {

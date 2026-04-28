@@ -17,7 +17,7 @@ export const getProfileCommand = new Command("get")
       const data = parseOrThrow(ProfileIdSchema, id);
       const getProfileRequest = await request({
         method: "get",
-        url: "/profiles/" + data,
+        url: "/api" + "/profiles/" + data,
       });
       if (getProfileRequest?.data.status === "success") {
         renderTable([getProfileRequest.data.data]);

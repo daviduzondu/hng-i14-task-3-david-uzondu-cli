@@ -22,7 +22,7 @@ export const exportProfilesCommand = buildOptions(
   await catchAndLogError(async () => {
     spinner.start("Generating export...Please wait...");
     const data = parseOrThrow(ProfileExportSchema, normalizeOptions(options));
-    // const searchProfilesRequest = await request<
+    // const exportProfilesRequest = await request<
     //   z.infer<typeof ProfileExportSchema>,
     //   | ({ data: Pick<SuccessResponse, "data">[] } & Omit<
     //       SuccessResponse,
