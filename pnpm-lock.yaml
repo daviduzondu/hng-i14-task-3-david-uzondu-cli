@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@bomb.sh/tab':
+        specifier: ^0.0.14
+        version: 0.0.14(commander@14.0.3)
       '@clack/prompts':
         specifier: ^1.2.0
         version: 1.2.0
@@ -26,6 +29,9 @@ importers:
       commander:
         specifier: ^14.0.3
         version: 14.0.3
+      content-disposition:
+        specifier: ^1.1.0
+        version: 1.1.0
       cookie:
         specifier: ^1.1.1
         version: 1.1.1
@@ -63,6 +69,9 @@ importers:
       '@eslint/js':
         specifier: ^10.0.1
         version: 10.0.1(eslint@10.2.1(jiti@2.6.1))
+      '@types/content-disposition':
+        specifier: ^0.5.9
+        version: 0.5.9
       '@types/express':
         specifier: ^5.0.6
         version: 5.0.6
@@ -113,6 +122,21 @@ packages:
   '@babel/types@8.0.0-rc.3':
     resolution: {integrity: sha512-mOm5ZrYmphGfqVWoH5YYMTITb3cDXsFgmvFlvkvWDMsR9X8RFnt7a0Wb6yNIdoFsiMO9WjYLq+U/FMtqIYAF8Q==}
     engines: {node: ^20.19.0 || >=22.12.0}
+
+  '@bomb.sh/tab@0.0.14':
+    resolution: {integrity: sha512-cHMk2LI430MVoX1unTt9oK1iZzQS4CYDz97MSxKLNErW69T43Z2QLFTpdS/3jVOIKrIADWfuxQ+nQNJkNV7E4w==}
+    hasBin: true
+    peerDependencies:
+      cac: ^6.7.14
+      citty: ^0.1.6 || ^0.2.0
+      commander: ^13.1.0
+    peerDependenciesMeta:
+      cac:
+        optional: true
+      citty:
+        optional: true
+      commander:
+        optional: true
 
   '@clack/core@1.2.0':
     resolution: {integrity: sha512-qfxof/3T3t9DPU/Rj3OmcFyZInceqj/NVtO9rwIuJqCUgh32gwPjpFQQp/ben07qKlhpwq7GzfWpST4qdJ5Drg==}
@@ -328,6 +352,9 @@ packages:
 
   '@types/connect@3.4.38':
     resolution: {integrity: sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==}
+
+  '@types/content-disposition@0.5.9':
+    resolution: {integrity: sha512-8uYXI3Gw35MhiVYhG3s295oihrxRyytcRHjSjqnqZVDDy/xcGBRny7+Xj1Wgfhv5QzRtN2hB2dVRBUX9XW3UcQ==}
 
   '@types/esrecurse@4.3.1':
     resolution: {integrity: sha512-xJBAbDifo5hpffDBuHl0Y8ywswbiAp/Wi7Y/GtAgSlZyIABppyurxVueOPE8LUQOxdlgi6Zqce7uoEpqNTeiUw==}
@@ -1415,6 +1442,10 @@ snapshots:
       '@babel/helper-string-parser': 8.0.0-rc.3
       '@babel/helper-validator-identifier': 8.0.0-rc.3
 
+  '@bomb.sh/tab@0.0.14(commander@14.0.3)':
+    optionalDependencies:
+      commander: 14.0.3
+
   '@clack/core@1.2.0':
     dependencies:
       fast-wrap-ansi: 0.1.6
@@ -1591,6 +1622,8 @@ snapshots:
   '@types/connect@3.4.38':
     dependencies:
       '@types/node': 25.6.0
+
+  '@types/content-disposition@0.5.9': {}
 
   '@types/esrecurse@4.3.1': {}
 

@@ -9,7 +9,7 @@ const program = new Command();
 program.name("insighta").description("Insighta CLI").version("0.0.1");
 program.addCommand(loginCommand);
 program.addCommand(whoamiCommand);
-program.addCommand(logoutCommand)
-program.addCommand(profilesCommand);
+program.addCommand(logoutCommand);
+program.addCommand(profilesCommand)
 
 program.parse();

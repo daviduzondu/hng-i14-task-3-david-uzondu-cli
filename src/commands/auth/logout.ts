@@ -7,7 +7,7 @@ export const logoutCommand = new Command()
   .command("logout")
   .description("Log out of your Insighta Labs+ account")
   .action(async () => {
-    intro("Logging out...");
+    log.step("Logging out...");
     const result = await request({
       url: "/auth/logout",
       method: "post",

@@ -3,6 +3,7 @@ import { createProfileCommand } from "./create";
 import { searchProfilesCommand } from "@/src/commands/profiles/search";
 import { listProfilesCommand } from "@/src/commands/profiles/list";
 import { getProfileCommand } from "@/src/commands/profiles/get";
+import { exportProfilesCommand } from "@/src/commands/profiles/export";
 
 export const profilesCommand = new Command("profiles")
   .description("Manage profiles")
@@ -10,3 +11,4 @@ export const profilesCommand = new Command("profiles")
   .addCommand(searchProfilesCommand)
   .addCommand(listProfilesCommand)
   .addCommand(getProfileCommand)
+  .addCommand(exportProfilesCommand)

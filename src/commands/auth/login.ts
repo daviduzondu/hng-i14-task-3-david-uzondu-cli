@@ -1,7 +1,6 @@
 import { catchAndLogError } from "@/src/lib/utils";
 import { app } from "@/src/server";
 import { Command } from "commander";
-import ora from "ora";
 import open from "open";
 import { v4 as uuidv4 } from "uuid";
 import pkceChallenge from "pkce-challenge";
@@ -10,12 +9,12 @@ import { EventEmitter } from "node:events";
 import { request } from "@/src/lib/api";
 import type z from "zod";
 import type { githubCallbackSchema } from "@/src/validation/auth";
-import { loadCredentials, saveCredentials } from "@/src/misc/credentials";
+import { saveCredentials } from "@/src/misc/credentials";
 import { parse } from "cookie";
 import { intro, log, outro } from "@clack/prompts";
 
 export const loginAction = async () => {
-  intro("Logging in...");
+  log.step("Logging in...");
 
   const pkce = await pkceChallenge();
   const state = uuidv4();
@@ -72,8 +71,8 @@ export const loginAction = async () => {
               }
           >({
             url: "/auth/github/callback",
-            method: "POST",
-            data: {
+            method: "GET",
+            params: {
               code: req.query.code,
               code_verifier: pkce.code_verifier,
             },

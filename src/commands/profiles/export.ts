@@ -4,36 +4,45 @@ import {
   normalizeOptions,
   parseOrThrow,
 } from "@/src/lib/utils";
-import { ProfileExportSchema } from "@/src/validation/profile";
+import { exportProfilesSchema } from "@/src/validation/profile";
 import { Command } from "commander";
-import ora from "ora";
 import * as z from "zod";
-import _ from "lodash";
-import { intro } from "@clack/prompts";
+import { log } from "@clack/prompts";
+import { request } from "@/src/lib/api";
+import { writeFileSync } from "node:fs";
+import path from "node:path";
+import contentDisposition from "content-disposition";
+import open from "open";
 
 export const exportProfilesCommand = buildOptions(
   new Command("export").description(
     "Export profiles in a particular data format (e.g. CSV)",
   ),
-  ProfileExportSchema,
-).action(async (options: z.infer<typeof ProfileExportSchema>) => {
+  exportProfilesSchema,
+).action(async (options: z.infer<typeof exportProfilesSchema>) => {
   await catchAndLogError(async () => {
-    intro("Generating export...Please wait...");
-    const data = parseOrThrow(ProfileExportSchema, normalizeOptions(options));
-    // const exportProfilesRequest = await request<
-    //   z.infer<typeof ProfileExportSchema>,
-    //   | ({ data: Pick<SuccessResponse, "data">[] } & Omit<
-    //       SuccessResponse,
-    //       "data"
-    //     >)
-    //   | ErrorResponse
-    // >({
-    //   method: "get",
-    //   url: "/profiles",
-    //   params: { ...data },
-    // });
-    // if (searchProfilesRequest?.data.status === "success") {
-    //   renderTable(searchProfilesRequest.data.data);
-    // }
+    log.step("Generating export...Please wait...");
+    const data = parseOrThrow(exportProfilesSchema, normalizeOptions(options));
+    const exportProfilesRequest = await request<
+      z.infer<typeof exportProfilesSchema>
+    >({
+      url: "/api/profiles/export",
+      params: { ...data },
+    });
+
+    const disposition = contentDisposition.parse(
+      exportProfilesRequest.headers["content-disposition"],
+    );
+    const filename = disposition.parameters['filename'];
+    if (filename) {
+      writeFileSync(
+        path.join(process.cwd(), filename),
+        exportProfilesRequest.data as unknown as string,
+      );
+      open(filename)
+      log.success("Profile exported successfully.");
+    } else {
+      throw new Error("Failed to write file");
+    }
   });
 });

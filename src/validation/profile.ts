@@ -148,10 +148,6 @@ export const profileQuerySchema = z
 
 export const ProfileIdSchema = z.uuid().describe("ID of the profile");
 
-export const ProfileExportSchema = z.object({
-  format: z
-    .enum(["csv"], {
-      error: "format must be 'csv'",
-    })
-    .describe("Export file format. Accepted values: 'csv'"),
+export const exportProfilesSchema = profileQuerySchema.extend({
+  format: z.enum(["csv"]),
 });

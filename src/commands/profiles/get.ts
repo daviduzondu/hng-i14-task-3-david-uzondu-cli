@@ -4,15 +4,15 @@ import { ProfileIdSchema } from "@/src/validation/profile";
 import { Command } from "commander";
 import ora from "ora";
 import _ from "lodash";
-import { intro } from "@clack/prompts";
+import { intro, log } from "@clack/prompts";
 
 export const getProfileCommand = new Command("get")
   .description("Get profile by ID")
   .argument("<id>", "ID of the profile")
   .action(async (id: string) => {
-   
+    intro("Insighta")
     await catchAndLogError(async () => {
-      intro("Pulling info...Please wait...");
+      log.step("Pulling info...Please wait...");
       const data = parseOrThrow(ProfileIdSchema, id);
       const getProfileRequest = await request({
         method: "get",
