@@ -9,7 +9,6 @@ import axios, {
   type AxiosResponse,
   type InternalAxiosRequestConfig,
 } from "axios";
-import _ from "lodash";
 const BASE_URL =
   process.env.NODE_ENV === "development"
     ? `http://localhost:${process.env.BACKEND_PORT || 6060}`
@@ -33,13 +32,17 @@ instance.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
     const originalRequest = error.config as RetryableConfig;
-
-    if (error.response?.status === 401 && !originalRequest?.retried) {
+    if (error.response?.status === 401 && originalRequest?.retried !== true) {
       try {
         originalRequest.retried = true;
 
         const credentials = loadCredentials(false);
-        if (!credentials) await loginAction();
+        if (!credentials) {
+          log.info(
+            "You're currently logged out. Attempting re-authentication...",
+          );
+          await loginAction();
+        }
 
         try {
           const { data } = await axios.post(BASE_URL + "/auth/refresh", {
@@ -49,13 +52,14 @@ instance.interceptors.response.use(
           if (data)
             saveCredentials({
               ...loadCredentials()!,
+              access_token: data.access_token
             });
 
           instance.defaults.headers.common["Authorization"] =
-            `Bearer ${data.accessToken}`;
+            `Bearer ${data.access_token}`;
           return instance(originalRequest);
         } catch (error) {
-          if (isAxiosError(error) && error.status === 403) {
+          if (isAxiosError(error) && error.status === 401) {
             log.info(
               "You're currently logged out. Attempting re-authentication...",
             );

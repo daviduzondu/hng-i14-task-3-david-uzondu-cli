@@ -10,15 +10,15 @@ export const createProfileCommand = buildOptions(
   new Command("create").description("Create a new profile"),
   createProfileSchema,
 ).action(async (options: z.infer<typeof createProfileSchema>) => {
-
+  intro("Insighta");
   await catchAndLogError(async () => {
-    intro("Creating profile");
+    log.step("Creating profile");
     const data = parseOrThrow(createProfileSchema, options);
     const createProfileRequest = await request<
       z.infer<typeof createProfileSchema>
     >({
       method: "post",
-      url:"/api"+ "/profiles",
+      url: "/api" + "/profiles",
       data: data,
     });
     if (createProfileRequest?.data.status === "success")

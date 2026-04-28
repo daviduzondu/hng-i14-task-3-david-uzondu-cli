@@ -7,7 +7,6 @@ import _ from "lodash";
 import ora from "ora";
 import * as clack from "@clack/prompts";
 
-
 type RenderTableOptions = {
   head?: string[]; // override column headers
   truncate?: number; // truncate long cell values

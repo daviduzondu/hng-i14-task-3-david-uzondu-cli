@@ -8,7 +8,7 @@ export const whoamiCommand = new Command()
   .description("Identify yourself")
   .action(() => {
     catchAndLogError(async () => {
-      intro("Checking...");
+      log.step("Verifying identity...");
       const credentials = loadCredentials(false);
       if (credentials?.username) {
         log.info("You're logged in as: " + credentials.username);
