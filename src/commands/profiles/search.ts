@@ -24,7 +24,7 @@ export const searchProfilesCommand = new Command("search")
         | ErrorResponse
       >({
         method: "get",
-        url: "/profiles/search",
+        url: "/api" + "/profiles/search",
         params: {
           q,
         },

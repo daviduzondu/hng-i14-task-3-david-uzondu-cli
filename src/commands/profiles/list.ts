@@ -26,7 +26,7 @@ export const listProfilesCommand = buildOptions(
       profileQuerySchema,
       normalizeOptions(options),
     );
-    const searchProfilesRequest = await request<
+    const listProfilesRequest = await request<
       z.infer<typeof profileQuerySchema>,
       | ({ data: Pick<SuccessResponse, "data">[] } & Omit<
           SuccessResponse,
@@ -35,11 +35,11 @@ export const listProfilesCommand = buildOptions(
       | ErrorResponse
     >({
       method: "get",
-      url: "/profiles",
+      url: "/api"+"/profiles",
       params: { ...data },
     });
-    if (searchProfilesRequest?.data.status === "success") {
-      renderTable(searchProfilesRequest.data.data);
+    if (listProfilesRequest?.data.status === "success") {
+      renderTable(listProfilesRequest.data.data);
     }
   }, spinner);
 });
