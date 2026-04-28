@@ -4,8 +4,9 @@ import type { Ora } from "ora";
 import z from "zod";
 import Table from "cli-table3";
 import _ from "lodash";
-import { app } from "@/src/server";
 import ora from "ora";
+import * as clack from "@clack/prompts";
+
 
 type RenderTableOptions = {
   head?: string[]; // override column headers
@@ -51,13 +52,12 @@ export function buildOptions(command: Command, schema: z.ZodObject) {
   return updatedCommand;
 }
 
-export async function catchAndLogError<T>(fn: () => Promise<T>, spinner: Ora) {
+export async function catchAndLogError<T>(fn: () => Promise<T>) {
   try {
     await fn();
-    spinner.stop();
   } catch (error: unknown) {
-    console.error(error);
-    spinner.fail(
+    // console.log(error)
+    clack.log.error(
       isAxiosError(error)
         ? error.response?.data?.message
           ? error.response?.data?.message

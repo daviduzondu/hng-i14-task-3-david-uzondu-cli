@@ -4,16 +4,15 @@ import { profileSearchSchema } from "@/src/validation/profile";
 import { Command } from "commander";
 import ora from "ora";
 import type { ErrorResponse, SuccessResponse } from "@/src/misc/types";
+import { intro } from "@clack/prompts";
 
 export const searchProfilesCommand = new Command("search")
   .description("Search for profiles")
   .argument("<query>", "Search query")
   .action(async (searchTerm: string) => {
-    const spinner = ora({
-      spinner: "dots3",
-    });
+   
     await catchAndLogError(async () => {
-      spinner.start("Searching...Please wait");
+      intro("Searching...Please wait");
       const q = parseOrThrow(profileSearchSchema, searchTerm);
       const searchProfilesRequest = await request<
         object,
@@ -32,5 +31,5 @@ export const searchProfilesCommand = new Command("search")
       if (searchProfilesRequest?.data.status === "success") {
         renderTable(searchProfilesRequest.data.data);
       }
-    }, spinner);
+    });
   });

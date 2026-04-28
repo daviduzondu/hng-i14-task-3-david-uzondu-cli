@@ -1,13 +1,13 @@
 import z from "zod";
 
 export const githubCallbackSchema = z.object({
-  codeVerifier: z.string(),
+  code_verifier: z.string(),
   code: z.string(),
 });
 
 export const credentialsSchema = z.object({
-  accessToken: z.string(),
-  refreshToken: z.string(),
+  access_token: z.string(),
+  refresh_token: z.string(),
   username: z.string(),
   role: z.string(),
 });

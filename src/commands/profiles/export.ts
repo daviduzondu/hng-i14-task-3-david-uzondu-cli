@@ -9,6 +9,7 @@ import { Command } from "commander";
 import ora from "ora";
 import * as z from "zod";
 import _ from "lodash";
+import { intro } from "@clack/prompts";
 
 export const exportProfilesCommand = buildOptions(
   new Command("export").description(
@@ -16,11 +17,8 @@ export const exportProfilesCommand = buildOptions(
   ),
   ProfileExportSchema,
 ).action(async (options: z.infer<typeof ProfileExportSchema>) => {
-  const spinner = ora({
-    spinner: "dots3",
-  });
   await catchAndLogError(async () => {
-    spinner.start("Generating export...Please wait...");
+    intro("Generating export...Please wait...");
     const data = parseOrThrow(ProfileExportSchema, normalizeOptions(options));
     // const exportProfilesRequest = await request<
     //   z.infer<typeof ProfileExportSchema>,
@@ -37,5 +35,5 @@ export const exportProfilesCommand = buildOptions(
     // if (searchProfilesRequest?.data.status === "success") {
     //   renderTable(searchProfilesRequest.data.data);
     // }
-  }, spinner);
+  });
 });
