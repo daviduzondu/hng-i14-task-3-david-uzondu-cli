@@ -11,6 +11,7 @@ import { request } from "@/src/lib/api";
 import type z from "zod";
 import type { githubCallbackSchema } from "@/src/validation/auth";
 import { loadCredentials, saveCredentials } from "@/src/misc/credentials";
+import { parse } from "cookie";
 
 export const loginCommand = new Command("login")
   .description("Login to your Insighta Labs+ account")
@@ -93,7 +94,19 @@ export const loginCommand = new Command("login")
               },
             });
             if (result.data.status === "success") {
-              saveCredentials(result.data.data);
+              const cookies = result.headers["set-cookie"] ?? [];
+              const parsed = Object.fromEntries(
+                cookies
+                  .map((c) => Object.entries(parse(c))[0])
+                  .filter(
+                    (entry): entry is [string, string] => entry !== undefined,
+                  ),
+              );
+
+              saveCredentials({
+                ...result.data.data,
+                refreshToken: parsed.refreshToken!,
+              });
               res
                 .status(200)
                 .send(

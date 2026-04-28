@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import os from "os";
 import { credentialsSchema } from "@/src/validation/auth";
+import type z from "zod";
 
 const CREDENTIALS_PATH = path.join(
   os.homedir(),
@@ -9,7 +10,7 @@ const CREDENTIALS_PATH = path.join(
   "credentials.json",
 );
 
-export function saveCredentials(credentials: Record<string, unknown>) {
+export function saveCredentials(credentials: z.infer<typeof credentialsSchema>) {
   const dir = path.dirname(CREDENTIALS_PATH);
   fs.mkdirSync(dir, { recursive: true });
   fs.writeFileSync(

@@ -7,6 +7,7 @@ export const githubCallbackSchema = z.object({
 
 export const credentialsSchema = z.object({
   accessToken: z.string(),
+  refreshToken: z.string(),
   username: z.string(),
   role: z.string(),
 });
