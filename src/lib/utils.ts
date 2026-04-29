@@ -1,10 +1,8 @@
 import { isAxiosError } from "axios";
 import type { Command } from "commander";
-import type { Ora } from "ora";
 import z from "zod";
 import Table from "cli-table3";
 import _ from "lodash";
-import ora from "ora";
 import * as clack from "@clack/prompts";
 
 type RenderTableOptions = {
@@ -56,6 +54,7 @@ export async function catchAndLogError<T>(fn: () => Promise<T>) {
     await fn();
   } catch (error: unknown) {
     // console.log(error)
+    console.log((error as Error).stack)
     clack.log.error(
       isAxiosError(error)
         ? error.response?.data?.message

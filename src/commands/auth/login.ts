@@ -11,7 +11,7 @@ import type z from "zod";
 import type { githubCallbackSchema } from "@/src/validation/auth";
 import { saveCredentials } from "@/src/misc/credentials";
 import { parse } from "cookie";
-import {  log, outro } from "@clack/prompts";
+import { log, outro } from "@clack/prompts";
 
 export const loginAction = async () => {
   log.step("Logging in...");
@@ -51,6 +51,7 @@ export const loginAction = async () => {
         >,
         res,
       ) => {
+
         await catchAndLogError(async () => {
           if (req.query.state !== state) {
             emitter.emit("error", new Error("Invalid state parameter"));
@@ -86,7 +87,6 @@ export const loginAction = async () => {
                   (entry): entry is [string, string] => entry !== undefined,
                 ),
             );
-
             saveCredentials({
               ...result.data.data,
               refresh_token: parsed.refresh_token!,
