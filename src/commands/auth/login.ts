@@ -89,7 +89,7 @@ export const loginAction = async () => {
 
             saveCredentials({
               ...result.data.data,
-              refresh_token: parsed.refreshToken!,
+              refresh_token: parsed.refresh_token!,
             });
             res
               .status(200)

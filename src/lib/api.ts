@@ -17,6 +17,7 @@ const instance = axios.create({
   withCredentials: true,
   baseURL: BASE_URL,
   headers: {
+    "X-CLI-Name": "insighta",
     "X-API-Version": "1",
   },
 });
