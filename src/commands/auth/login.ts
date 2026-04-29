@@ -11,7 +11,7 @@ import type z from "zod";
 import type { githubCallbackSchema } from "@/src/validation/auth";
 import { saveCredentials } from "@/src/misc/credentials";
 import { parse } from "cookie";
-import { intro, log, outro } from "@clack/prompts";
+import {  log, outro } from "@clack/prompts";
 
 export const loginAction = async () => {
   log.step("Logging in...");
@@ -89,7 +89,7 @@ export const loginAction = async () => {
 
             saveCredentials({
               ...result.data.data,
-              refresh_token: parsed.refreshToken!,
+              refresh_token: parsed.refresh_token!,
             });
             res
               .status(200)
