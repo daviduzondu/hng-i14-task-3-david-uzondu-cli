@@ -12,7 +12,7 @@ import axios, {
 const BASE_URL =
   process.env.NODE_ENV === "development"
     ? `http://localhost:${process.env.BACKEND_PORT || 6060}`
-    : `http://hng-i14-task-2-david-uzondu-server-lime.vercel.app`; // TODO: Replace prod backend URL with the updated one
+    : `https://hng-i14-task-3-david-uzondu-backend.vercel.app`; // TODO: Replace prod backend URL with the updated one
 const instance = axios.create({
   withCredentials: true,
   baseURL: BASE_URL,
