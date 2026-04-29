@@ -23,9 +23,9 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use((config) => {
-  if (loadCredentials(false)?.access_token) {
-    config.headers["Authorization"] =
-      `Bearer ${loadCredentials(false)?.access_token}`;
+  const credentials = loadCredentials(false);
+  if (credentials?.access_token) {
+    config.headers["Cookie"] = `access_token=${credentials.access_token}`;
   }
   return config;
 });
@@ -36,7 +36,6 @@ instance.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
     const originalRequest = error.config as RetryableConfig;
-    console.log(error.response?.statusText, originalRequest?.retried !== true);
     if (error.response?.status === 401 && originalRequest?.retried !== true) {
       try {
         originalRequest.retried = true;
@@ -50,18 +49,34 @@ instance.interceptors.response.use(
         }
 
         try {
-          const { data } = await axios.post(BASE_URL + "/auth/refresh", {
-            refresh_token: loadCredentials(false)!.refresh_token,
-          });
+          const { data, headers } = await axios.post(
+            BASE_URL + "/auth/refresh",
+            {
+              refresh_token: loadCredentials(false)!.refresh_token,
+            },
+          );
 
-          if (data)
+          const setCookie = headers["set-cookie"]?.find((c: string) =>
+            c.startsWith("access_token="),
+          );
+          const newAccessToken = setCookie?.split(";")[0]?.split("=")[1];
+
+          // if (data)
+          //   saveCredentials({
+          //     ...loadCredentials()!,
+          //     access_token: data.access_token,
+          //   });
+
+          if (data) {
             saveCredentials({
               ...loadCredentials()!,
               access_token: data.access_token,
             });
+          }
 
-          instance.defaults.headers.common["Authorization"] =
-            `Bearer ${data.access_token}`;
+          instance.defaults.headers.common["Cookie"] =
+            `access_token=${newAccessToken}`;
+
           return instance(originalRequest);
         } catch (error) {
           if (isAxiosError(error) && error.status === 401) {
@@ -69,8 +84,9 @@ instance.interceptors.response.use(
               "You're currently logged out. Attempting re-authentication...",
             );
             await loginAction();
-            instance.defaults.headers.common["Authorization"] =
-              `Bearer ${loadCredentials()!.access_token}`;
+
+            instance.defaults.headers.common["Cookie"] =
+              `access_token=${loadCredentials()!.access_token}`;
             return instance(originalRequest);
           } else {
             throw error;

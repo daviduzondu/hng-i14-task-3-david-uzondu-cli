@@ -25,19 +25,18 @@ export function saveCredentials(
 export function loadCredentials(throwOnNotExists = true) {
   if (!fs.existsSync(CREDENTIALS_PATH)) {
     if (throwOnNotExists) {
-      console.log("YO!");
       throw new Error(
         "Failed to parse credentials. Try running: insighta login",
       );
     } else return null;
   }
-  //     {
-  //     throw new Error("Failed to parse credentials. Try running: insighta login");
-  //   }
   const raw = fs.readFileSync(CREDENTIALS_PATH, "utf-8");
   const { error, data } = credentialsSchema.safeParse(JSON.parse(raw));
-  if (error)
-    throw new Error("Failed to parse credentials. Try running: insighta login");
+  if (error) {
+    // credentials.json is in bad shape. so just delete it.
+    fs.unlinkSync(CREDENTIALS_PATH);
+    return null;
+  }
   return data;
 }
 
